@@ -1,7 +1,7 @@
 <template>
     <div class="member-action">
         <div class="header">{{ currentPlayerNameOrNull }}</div>
-        <template v-if="playerStep === SceneStep.Finding">
+        <template v-if="playerStep === MemberStep.Finding">
             <div class="container">
                 <div class="messages">
                     <div>자리를 찾고 있습니다.</div>
@@ -18,7 +18,7 @@
             </div>
             <v-btn size="x-large" :width="350" @click="startFindSeat">자리찾기 중단하기</v-btn>
         </template>
-        <template v-else-if="playerStep === SceneStep.Found">
+        <template v-else-if="playerStep === MemberStep.Found">
             <div class="container">
                 <div class="messages">
                     <div>자리를 찾기가 완료 되었습니다.</div>
@@ -40,7 +40,7 @@
 <script setup lang="ts">
 //썸네일 3열씩 표시, width X height는 고정으로 표시될거 같다.
 
-import { type MemberName, SceneStep } from '@/components/types';
+import { MemberStep } from '@/components/types';
 import { VBtn } from 'vuetify/components/VBtn';
 import { useSceneStore } from '@/stores/scene';
 import { storeToRefs } from 'pinia';
@@ -53,7 +53,7 @@ const { updatePlayerStep, confirmAndNext } = sceneStore;
 const { currentPlayerNameOrNull, playerStep } = storeToRefs(sceneStore);
 
 const startFindSeat = () => {
-    updatePlayerStep(SceneStep.Finding);
+    updatePlayerStep(MemberStep.Finding);
 };
 </script>
 

@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import type { MemberName } from '@/components/types';
-import { SceneStep } from '@/components/types';
+import { MemberStep, SceneStep } from '@/components/types';
 import { Vector2D } from '@/components/Vector';
 
 export const ANI_STEP = {
@@ -15,7 +15,8 @@ export const ANI_STEP = {
     STOP: 7
 };
 export const useSceneStore = defineStore('scene', () => {
-    const playerStep = ref<SceneStep>(0);
+    const sceneStep = ref<SceneStep>(0);
+    const playerStep = ref<MemberStep>(0);
     const aniStep = ref<number>(0);
     const goingSeatIndex = ref<number>(-1);
 
@@ -24,6 +25,9 @@ export const useSceneStore = defineStore('scene', () => {
 
     const seats = ref<(MemberName | null)[]>(Array(12).fill(null));
 
+    const nextSceneStep = () => {
+        sceneStep.value++;
+    };
     const randomChoiceIndex = () => {
         const emptySeats = seats.value
             .map((seat, index) => (seat === null ? index : null))
@@ -39,11 +43,11 @@ export const useSceneStore = defineStore('scene', () => {
 
     const seatDown = () => {
         seats.value[goingSeatIndex.value] = currentPlayerNameOrNull.value;
-        playerStep.value = SceneStep.Found;
+        playerStep.value = MemberStep.Found;
     };
 
     const confirmAndNext = () => {
-        updatePlayerStep(SceneStep.Ready);
+        updatePlayerStep(MemberStep.Ready);
         selectPlayerNameOrNull(null);
         initPlayerPosition();
 
@@ -54,7 +58,7 @@ export const useSceneStore = defineStore('scene', () => {
         playerStep.value++;
     };
 
-    const updatePlayerStep = (step: SceneStep) => {
+    const updatePlayerStep = (step: MemberStep) => {
         playerStep.value = step;
     };
     const selectPlayerNameOrNull = (name: MemberName | null) => {
@@ -68,13 +72,15 @@ export const useSceneStore = defineStore('scene', () => {
     };
 
     return {
+        sceneStep,
+        nextSceneStep,
         seats,
         goingSeatIndex,
         randomChoiceIndex,
         seatDown,
         playerStep,
         aniStep,
-        nextPlayerStep,
+
         updatePlayerStep,
         currentPlayerNameOrNull,
         currentPlayerPosition,

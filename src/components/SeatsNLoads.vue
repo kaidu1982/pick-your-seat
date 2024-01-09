@@ -11,15 +11,28 @@
         <div class="roads">
             <exit />
             <canvas ref="canvasRef" />
-            <character
-                class="character-animation"
-                v-if="currentPlayerNameOrNull && playerStep === SceneStep.Finding"
-                :width="42"
-                :height="80"
-                :name="currentPlayerNameOrNull"
-                :action="computedAction"
-                :style="position"
-            />
+            <template v-if="currentPlayerNameOrNull === 'kevin'">
+                <animate-move
+                    class="character-animation"
+                    v-if="currentPlayerNameOrNull && playerStep === SceneStep.Finding"
+                    :width="42"
+                    :height="80"
+                    :name="currentPlayerNameOrNull"
+                    :action="computedAction"
+                    :style="position"
+                />
+            </template>
+            <template v-else>
+                <character
+                    class="character-animation"
+                    v-if="currentPlayerNameOrNull && playerStep === SceneStep.Finding"
+                    :width="42"
+                    :height="80"
+                    :name="currentPlayerNameOrNull"
+                    :action="computedAction"
+                    :style="position"
+                />
+            </template>
         </div>
         <div class="right seats">
             <seat :name="seats[6]" :direction="'top'" />
@@ -40,6 +53,7 @@ import { storeToRefs } from 'pinia';
 import { MEMBER_ACTION, SceneStep } from '@/components/types';
 import Character from '@/components/Character.vue';
 import Seat from '@/components/Seat.vue';
+import AnimateMove from '@/components/AnimateMove.vue';
 
 const sceneStore = useSceneStore();
 const { seatDown } = sceneStore;
@@ -63,19 +77,13 @@ const heightPerSeat = 100;
 const canvasRef: Ref<HTMLCanvasElement | undefined> = ref<HTMLCanvasElement>();
 
 const computedAction = computed(() => {
-    if (aniStep.value === ANI_STEP.APPEAR) return MEMBER_ACTION.HI;
-    else if (
-        aniStep.value === ANI_STEP.ROTATION_RIGHT ||
-        aniStep.value === ANI_STEP.ROTATION_DOWN ||
-        aniStep.value === ANI_STEP.MOVE_RIGHT
-    )
+    if (aniStep.value === ANI_STEP.APPEAR) return MEMBER_ACTION.STRAIGHT;
+    else if (aniStep.value === ANI_STEP.ROTATION_RIGHT || aniStep.value === ANI_STEP.MOVE_RIGHT)
         return MEMBER_ACTION.RIGHT;
-    else if (
-        aniStep.value === ANI_STEP.ROTATION_LEFT ||
-        aniStep.value === ANI_STEP.ROTATION_UP ||
-        aniStep.value === ANI_STEP.MOVE_LEFT
-    )
+    else if (aniStep.value === ANI_STEP.ROTATION_LEFT || aniStep.value === ANI_STEP.MOVE_LEFT)
         return MEMBER_ACTION.LEFT;
+    else if (aniStep.value === ANI_STEP.ROTATION_DOWN) return MEMBER_ACTION.STRAIGHT;
+    else if (aniStep.value === ANI_STEP.ROTATION_UP) return MEMBER_ACTION.BACK;
     else return MEMBER_ACTION.STANDING;
 });
 

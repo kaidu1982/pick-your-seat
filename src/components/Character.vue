@@ -1,12 +1,12 @@
 <template>
     <div class="character" :style="{ width: props.width + 'px', height: props.height + 'px' }">
-        <action :width="props.width" :height="props.height" />
+        <img :src="svgPath" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, watchEffect } from 'vue';
-import type { Action, MemberName } from '@/components/types';
+import { computed } from 'vue';
+import { type Action, MEMBER_ACTION, type MemberName } from '@/components/types';
 
 const props = defineProps<{
     name: MemberName;
@@ -14,17 +14,21 @@ const props = defineProps<{
     width: number;
     height: number;
 }>();
-let action = defineAsyncComponent(() => import(`./animate/${props.name}_${props.action}.vue`));
 
-watchEffect(async () => {
-    console.log('watchEffect define', props.action);
-    action = defineAsyncComponent(() => import(`./animate/${props.name}_${props.action}.vue`));
+const computedAction = computed(() => {
+    if (props.action === MEMBER_ACTION.STRAIGHT) return MEMBER_ACTION.STANDING;
+    else if (props.action === MEMBER_ACTION.BACK) return MEMBER_ACTION.STANDING;
+    else return props.action;
 });
+
+const svgPath = computed(() => `./animate/${props.name}_${computedAction.value}.svg`);
 </script>
 
 <style scoped>
 .character {
-    width: fit-content;
-    height: fit-content;
+    img {
+        width: 100%;
+        height: 100%;
+    }
 }
 </style>

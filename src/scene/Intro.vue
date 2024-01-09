@@ -14,12 +14,12 @@
 </template>
 <script setup lang="ts">
 import { VBtn } from 'vuetify/components/VBtn';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
+import { useSceneStore } from '@/stores/scene';
+const sceneStore = useSceneStore();
+const { nextSceneStep } = sceneStore;
 
 const start = () => {
-    router.push('/office');
+    nextSceneStep();
 };
 </script>
 <style lang="scss" scoped>
