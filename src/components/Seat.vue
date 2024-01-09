@@ -12,7 +12,7 @@ const props = defineProps<{
 }>();
 
 const computedName = computed(() => (props.name === null ? 'empty' : props.name));
-const svgPath = computed(() => `/seat/${computedName.value}_${props.direction}.svg`);
+const svgPath = computed(() => `./seat/${computedName.value}_${props.direction}.svg`);
 </script>
 
 <style scoped>
