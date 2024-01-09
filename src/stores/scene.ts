@@ -28,6 +28,8 @@ export const ANI_STEP = {
     MOVE_RIGHT: 6,
     STOP: 7
 };
+
+const bgmAudio = new Audio('./sound/bgm.mp3');
 export const useSceneStore = defineStore('scene', () => {
     const sceneStep = ref<SceneStep>(0);
     const playerStep = ref<MemberStep>(0);
@@ -62,9 +64,9 @@ export const useSceneStore = defineStore('scene', () => {
     const seatDown = () => {
         seats.value[goingSeatIndex.value] = currentPlayerNameOrNull.value;
         playerStep.value = MemberStep.Found;
-        //card 액션 추가.
 
         cardOrNull.value = SEATS_CARD[goingSeatIndex.value];
+        bgmAudio.pause();
     };
 
     const confirmAndNext = () => {
@@ -77,6 +79,9 @@ export const useSceneStore = defineStore('scene', () => {
 
     const updatePlayerStep = (step: MemberStep) => {
         playerStep.value = step;
+        if (step === MemberStep.Finding) {
+            bgmAudio.play();
+        }
     };
     const selectPlayerNameOrNull = (name: MemberName | null) => {
         if (currentPlayerNameOrNull.value === name) currentPlayerNameOrNull.value = null;
