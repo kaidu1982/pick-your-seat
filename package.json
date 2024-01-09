@@ -6,9 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "vite build",
     "preview": "vite preview --port 1127",
-    "build-only": "vite build",
     "deploy": "node_modules/.bin/gh-pages -d dist"
   },
   "dependencies": {
