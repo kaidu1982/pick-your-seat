@@ -4,12 +4,21 @@
             <seats-n-loads />
             <member-wrapper />
         </div>
+        <card-layer v-if="cardOrNull !== null" :card="cardOrNull" />
     </div>
 </template>
 <script setup lang="ts">
+import { useSceneStore } from '@/stores/scene';
+
+const sceneStore = useSceneStore();
+
+const { cardOrNull } = storeToRefs(sceneStore);
+
 import MemberWrapper from '@/components/MemberWrapper.vue';
 
 import SeatsNLoads from '@/components/SeatsNLoads.vue';
+import CardLayer from '@/components/CardLayer.vue';
+import { storeToRefs } from 'pinia';
 </script>
 <style lang="scss" scoped>
 .area {

@@ -12,7 +12,12 @@
             <exit />
             <canvas ref="canvasRef" />
             <template
-                v-if="currentPlayerNameOrNull === 'kevin' || currentPlayerNameOrNull === 'alvin'"
+                v-if="
+                    currentPlayerNameOrNull === 'kevin' ||
+                    currentPlayerNameOrNull === 'alvin' ||
+                    currentPlayerNameOrNull === 'ryan' ||
+                    currentPlayerNameOrNull === 'david'
+                "
             >
                 <animate-move
                     class="character-animation"

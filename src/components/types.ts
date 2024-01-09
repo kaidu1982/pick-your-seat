@@ -13,6 +13,14 @@ export const MEMBER_NAMES = {
     POTATO: 'potato'
 } as const;
 
+export const EVENT_CARD = {
+    WATER: 'loadOfWater',
+    SEASON: 'season',
+    INDEPENDENT: 'independent',
+    TREE: 'slaveOfTree',
+    SUN: 'sun'
+} as const;
+
 export const MEMBER_ACTION = {
     LEFT: 'left',
     RIGHT: 'right',
@@ -25,6 +33,7 @@ export const NAMES = Object.values(MEMBER_NAMES).sort();
 
 export type MemberName = (typeof MEMBER_NAMES)[keyof typeof MEMBER_NAMES];
 export type Action = (typeof MEMBER_ACTION)[keyof typeof MEMBER_ACTION];
+export type Card = (typeof EVENT_CARD)[keyof typeof EVENT_CARD];
 
 export enum MemberStep {
     Ready = 0,

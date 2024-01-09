@@ -1,9 +1,23 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import type { MemberName } from '@/components/types';
-import { MemberStep, SceneStep } from '@/components/types';
+import type { Card, MemberName } from '@/components/types';
+import { EVENT_CARD, MemberStep, SceneStep } from '@/components/types';
 import { Vector2D } from '@/components/Vector';
 
+export const SEATS_CARD = [
+    EVENT_CARD.INDEPENDENT,
+    null,
+    null,
+    null,
+    EVENT_CARD.SEASON,
+    EVENT_CARD.TREE,
+    EVENT_CARD.INDEPENDENT,
+    EVENT_CARD.WATER,
+    null,
+    null,
+    EVENT_CARD.SUN,
+    EVENT_CARD.INDEPENDENT
+];
 export const ANI_STEP = {
     APPEAR: 0,
     ROTATION_RIGHT: 1,
@@ -19,12 +33,16 @@ export const useSceneStore = defineStore('scene', () => {
     const playerStep = ref<MemberStep>(0);
     const aniStep = ref<number>(0);
     const goingSeatIndex = ref<number>(-1);
+    const cardOrNull = ref<Card | null>(EVENT_CARD.INDEPENDENT);
 
     const currentPlayerNameOrNull = ref<MemberName | null>(null);
     const currentPlayerPosition = ref<Vector2D>(new Vector2D(220, 0));
 
     const seats = ref<(MemberName | null)[]>(Array(12).fill(null));
 
+    const closeCardLayer = () => {
+        cardOrNull.value = null;
+    };
     const nextSceneStep = () => {
         sceneStep.value++;
     };
@@ -44,6 +62,9 @@ export const useSceneStore = defineStore('scene', () => {
     const seatDown = () => {
         seats.value[goingSeatIndex.value] = currentPlayerNameOrNull.value;
         playerStep.value = MemberStep.Found;
+        //card 액션 추가.
+
+        cardOrNull.value = SEATS_CARD[goingSeatIndex.value];
     };
 
     const confirmAndNext = () => {
@@ -52,10 +73,6 @@ export const useSceneStore = defineStore('scene', () => {
         initPlayerPosition();
 
         aniStep.value = ANI_STEP.APPEAR;
-    };
-
-    const nextPlayerStep = () => {
-        playerStep.value++;
     };
 
     const updatePlayerStep = (step: MemberStep) => {
@@ -77,6 +94,7 @@ export const useSceneStore = defineStore('scene', () => {
         seats,
         goingSeatIndex,
         randomChoiceIndex,
+        cardOrNull,
         seatDown,
         playerStep,
         aniStep,
@@ -85,6 +103,7 @@ export const useSceneStore = defineStore('scene', () => {
         currentPlayerNameOrNull,
         currentPlayerPosition,
         selectPlayerNameOrNull,
-        confirmAndNext
+        confirmAndNext,
+        closeCardLayer
     };
 });
