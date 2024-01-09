@@ -33,7 +33,7 @@ export const useSceneStore = defineStore('scene', () => {
     const playerStep = ref<MemberStep>(0);
     const aniStep = ref<number>(0);
     const goingSeatIndex = ref<number>(-1);
-    const cardOrNull = ref<Card | null>(EVENT_CARD.INDEPENDENT);
+    const cardOrNull = ref<Card | null>(null);
 
     const currentPlayerNameOrNull = ref<MemberName | null>(null);
     const currentPlayerPosition = ref<Vector2D>(new Vector2D(220, 0));

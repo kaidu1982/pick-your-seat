@@ -1,6 +1,6 @@
 <template>
     <div class="member-action">
-        <div class="header">{{ currentPlayerNameOrNull }}</div>
+        <div class="header">{{ name }}</div>
         <template v-if="playerStep === MemberStep.Finding">
             <div class="container">
                 <div class="messages">
@@ -47,11 +47,20 @@ import { storeToRefs } from 'pinia';
 import Found from '@/components/icon/found.vue';
 import Radar from '@/components/icon/radar.vue';
 import Character from '@/components/Character.vue';
+import { computed } from 'vue';
 
 const sceneStore = useSceneStore();
 const { updatePlayerStep, confirmAndNext } = sceneStore;
 const { currentPlayerNameOrNull, playerStep } = storeToRefs(sceneStore);
 
+const name = computed(() => {
+    if (currentPlayerNameOrNull.value) {
+        return (
+            currentPlayerNameOrNull.value[0].toUpperCase() + currentPlayerNameOrNull.value.slice(1)
+        );
+    }
+    return '';
+});
 const startFindSeat = () => {
     updatePlayerStep(MemberStep.Finding);
 };

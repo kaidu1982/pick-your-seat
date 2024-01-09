@@ -23,7 +23,7 @@
 <script setup lang="ts">
 //썸네일 3열씩 표시, width X height는 고정으로 표시될거 같다.
 
-import { type MemberName, MemberStep, NAMES, SceneStep } from '@/components/types';
+import { type MemberName, MemberStep, NAMES } from '@/components/types';
 import Profile from '@/components/Profile.vue';
 import { VBtn } from 'vuetify/components/VBtn';
 import { useSceneStore } from '@/stores/scene';
