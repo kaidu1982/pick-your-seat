@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
+    "preview": "vite preview --port 1127",
     "build-only": "vite build",
     "deploy": "node_modules/.bin/gh-pages -d dist"
   },
