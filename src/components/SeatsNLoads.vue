@@ -11,10 +11,12 @@
         <div class="roads">
             <exit />
             <canvas ref="canvasRef" />
-            <template v-if="currentPlayerNameOrNull === 'kevin'">
+            <template
+                v-if="currentPlayerNameOrNull === 'kevin' || currentPlayerNameOrNull === 'alvin'"
+            >
                 <animate-move
                     class="character-animation"
-                    v-if="currentPlayerNameOrNull && playerStep === SceneStep.Finding"
+                    v-if="currentPlayerNameOrNull && playerStep === MemberStep.Finding"
                     :width="42"
                     :height="80"
                     :name="currentPlayerNameOrNull"
@@ -25,7 +27,7 @@
             <template v-else>
                 <character
                     class="character-animation"
-                    v-if="currentPlayerNameOrNull && playerStep === SceneStep.Finding"
+                    v-if="currentPlayerNameOrNull && playerStep === MemberStep.Finding"
                     :width="42"
                     :height="80"
                     :name="currentPlayerNameOrNull"
@@ -50,7 +52,7 @@ import Exit from '@/components/exit.vue';
 import { computed, onMounted, ref, type Ref } from 'vue';
 import { ANI_STEP, useSceneStore } from '@/stores/scene';
 import { storeToRefs } from 'pinia';
-import { MEMBER_ACTION, SceneStep } from '@/components/types';
+import { MEMBER_ACTION, MemberStep, SceneStep } from '@/components/types';
 import Character from '@/components/Character.vue';
 import Seat from '@/components/Seat.vue';
 import AnimateMove from '@/components/AnimateMove.vue';
@@ -123,7 +125,7 @@ const canvasDraw = () => {
     ctx.strokeStyle = '#E5C47A';
     ctx.stroke(path);
 
-    if (playerStep.value === SceneStep.Finding) {
+    if (playerStep.value === MemberStep.Finding) {
         move(0.1);
     }
 
