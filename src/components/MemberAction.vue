@@ -93,7 +93,7 @@ const startFindSeat = () => {
             font-size: 18px;
             color: #1c1c1c;
         }
-        .charactor {
+        .character {
             margin: auto;
         }
     }

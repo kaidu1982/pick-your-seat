@@ -20,7 +20,7 @@ const props = defineProps<{
 
 setInterval(() => {
     isFirst.value = !isFirst.value;
-}, 500);
+}, 300);
 
 const svgPath1 = computed(() => `./animate/${props.name}_${props.action}_1.svg`);
 const svgPath2 = computed(() => `./animate/${props.name}_${props.action}_2.svg`);
