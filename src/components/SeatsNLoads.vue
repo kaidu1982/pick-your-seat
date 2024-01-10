@@ -15,8 +15,8 @@
             <animate-move
                 class="character-animation"
                 v-if="currentPlayerNameOrNull && playerStep === MemberStep.Finding"
-                :width="42"
-                :height="80"
+                :width="58"
+                :height="110"
                 :name="currentPlayerNameOrNull"
                 :action="computedAction"
                 :style="position"
@@ -231,7 +231,7 @@ const position = computed(() => {
         .character-animation {
             position: absolute;
             z-index: 10;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -70%);
         }
     }
 }
