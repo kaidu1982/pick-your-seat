@@ -11,35 +11,16 @@
         <div class="roads">
             <exit />
             <canvas ref="canvasRef" />
-            <template
-                v-if="
-                    currentPlayerNameOrNull === 'kevin' ||
-                    currentPlayerNameOrNull === 'alvin' ||
-                    currentPlayerNameOrNull === 'ryan' ||
-                    currentPlayerNameOrNull === 'david'
-                "
-            >
-                <animate-move
-                    class="character-animation"
-                    v-if="currentPlayerNameOrNull && playerStep === MemberStep.Finding"
-                    :width="42"
-                    :height="80"
-                    :name="currentPlayerNameOrNull"
-                    :action="computedAction"
-                    :style="position"
-                />
-            </template>
-            <template v-else>
-                <character
-                    class="character-animation"
-                    v-if="currentPlayerNameOrNull && playerStep === MemberStep.Finding"
-                    :width="42"
-                    :height="80"
-                    :name="currentPlayerNameOrNull"
-                    :action="computedAction"
-                    :style="position"
-                />
-            </template>
+
+            <animate-move
+                class="character-animation"
+                v-if="currentPlayerNameOrNull && playerStep === MemberStep.Finding"
+                :width="42"
+                :height="80"
+                :name="currentPlayerNameOrNull"
+                :action="computedAction"
+                :style="position"
+            />
         </div>
         <div class="right seats">
             <seat :name="seats[6]" :direction="'top'" />
@@ -57,8 +38,7 @@ import Exit from '@/components/exit.vue';
 import { computed, onMounted, ref, type Ref } from 'vue';
 import { ANI_STEP, useSceneStore } from '@/stores/scene';
 import { storeToRefs } from 'pinia';
-import { MEMBER_ACTION, MemberStep, SceneStep } from '@/components/types';
-import Character from '@/components/Character.vue';
+import { MEMBER_ACTION, MemberStep } from '@/components/types';
 import Seat from '@/components/Seat.vue';
 import AnimateMove from '@/components/AnimateMove.vue';
 
