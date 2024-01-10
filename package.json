@@ -15,7 +15,8 @@
     "vue": "^3.3.10",
     "vue-router": "^4.2.5",
     "vuetify": "^3.4.6",
-    "vite-plugin-vuetify": "^1.0.2"
+    "vite-plugin-vuetify": "^1.0.2",
+    "html2canvas": "^1.4.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.1",
