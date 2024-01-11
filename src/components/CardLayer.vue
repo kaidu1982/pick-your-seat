@@ -9,7 +9,6 @@ import type { Card } from '@/components/types';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useSceneStore } from '@/stores/scene';
 
-const show = ref(false);
 const sceneStore = useSceneStore();
 
 const { closeCardLayer } = sceneStore;
@@ -18,6 +17,7 @@ const props = defineProps<{
     card: Card;
 }>();
 
+const show = ref(false);
 onMounted(() => {
     setTimeout(() => {
         show.value = true;
@@ -46,12 +46,12 @@ const svgPath = computed(() => `./card/${props.card}.svg`);
 
     img {
         position: fixed;
+        transform: translateY(120%);
+        transition: transform ease 0.6s;
         z-index: 1000;
         width: fit-content;
         height: fit-content;
         cursor: pointer;
-        transform: translateY(120%);
-        transition: transform ease 0.6s;
     }
 
     img.show {

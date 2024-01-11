@@ -1,8 +1,9 @@
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import type { Card, MemberName } from '@/components/types';
 import { EVENT_CARD, MemberStep, SceneStep } from '@/components/types';
 import { Vector2D } from '@/components/Vector';
+import mitt from 'mitt';
 
 export const SEATS_CARD = [
     EVENT_CARD.INDEPENDENT,
@@ -28,7 +29,7 @@ export const ANI_STEP = {
     MOVE_RIGHT: 6,
     STOP: 7
 };
-
+export const emitter = mitt();
 const bgmAudio = new Audio('./sound/bgm.mp3');
 export const useSceneStore = defineStore('scene', () => {
     const sceneStep = ref<SceneStep>(0);
@@ -39,8 +40,17 @@ export const useSceneStore = defineStore('scene', () => {
 
     const currentPlayerNameOrNull = ref<MemberName | null>(null);
     const currentPlayerPosition = ref<Vector2D>(new Vector2D(220, 0));
-
     const seats = ref<(MemberName | null)[]>(Array(12).fill(null));
+
+    const reset = () => {
+        sceneStep.value = 0;
+        playerStep.value = 0;
+        aniStep.value = 0;
+        goingSeatIndex.value = 0;
+        cardOrNull.value = null;
+        initPlayerPosition();
+        seats.value.fill(null);
+    };
 
     const closeCardLayer = () => {
         cardOrNull.value = null;
@@ -54,10 +64,7 @@ export const useSceneStore = defineStore('scene', () => {
             .filter((seat) => seat !== null) as number[];
 
         if (emptySeats.length > 0) {
-            const randomSeatIndex = emptySeats[Math.floor(Math.random() * emptySeats.length)];
-            console.log('randomSeatIndex', randomSeatIndex);
-
-            goingSeatIndex.value = randomSeatIndex;
+            goingSeatIndex.value = emptySeats[Math.floor(Math.random() * emptySeats.length)];
         }
     };
 
@@ -93,22 +100,27 @@ export const useSceneStore = defineStore('scene', () => {
         currentPlayerPosition.value.y = 0;
     };
 
+    const seatsFull = computed((): boolean => {
+        return seats.value.filter((seat: MemberName | null) => seat === null).length === 0;
+    });
+
     return {
         sceneStep,
         nextSceneStep,
         seats,
+        seatsFull,
         goingSeatIndex,
         randomChoiceIndex,
         cardOrNull,
         seatDown,
         playerStep,
         aniStep,
-
         updatePlayerStep,
         currentPlayerNameOrNull,
         currentPlayerPosition,
         selectPlayerNameOrNull,
         confirmAndNext,
-        closeCardLayer
+        closeCardLayer,
+        reset
     };
 });

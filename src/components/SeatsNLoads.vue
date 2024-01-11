@@ -1,5 +1,5 @@
 <template>
-    <div class="seats-n-loads">
+    <div class="seats-n-loads" ref="seatsLoadsRef">
         <div class="left seats">
             <seat :name="seats[0]" :direction="'bottom'" />
             <seat :name="seats[1]" :direction="'bottom'" />
@@ -36,11 +36,13 @@
 <script setup lang="ts">
 import Exit from '@/components/exit.vue';
 import { computed, onMounted, ref, type Ref } from 'vue';
-import { ANI_STEP, useSceneStore } from '@/stores/scene';
+import { ANI_STEP, emitter, useSceneStore } from '@/stores/scene';
 import { storeToRefs } from 'pinia';
 import { MEMBER_ACTION, MemberStep } from '@/components/types';
 import Seat from '@/components/Seat.vue';
 import AnimateMove from '@/components/AnimateMove.vue';
+
+import html2canvas from 'html2canvas';
 
 const sceneStore = useSceneStore();
 const { seatDown } = sceneStore;
@@ -62,6 +64,7 @@ const moveVelocity = 100;
 const roadWidth = 16;
 const heightPerSeat = 100;
 const canvasRef: Ref<HTMLCanvasElement | undefined> = ref<HTMLCanvasElement>();
+const seatsLoadsRef: Ref<HTMLElement | undefined> = ref<HTMLElement>();
 
 const computedAction = computed(() => {
     if (aniStep.value === ANI_STEP.APPEAR) return MEMBER_ACTION.STRAIGHT;
@@ -203,6 +206,33 @@ const position = computed(() => {
         top: `${currentPlayerPosition.value.y}px`
     };
 });
+
+onMounted(() => {
+    emitter.on('saveImage', () => {
+        saveImage();
+    });
+});
+const saveImage = async () => {
+    try {
+        if (seatsLoadsRef.value) {
+            const element = seatsLoadsRef.value;
+            const thumbnailWidth = 872;
+            const scale = thumbnailWidth / element.offsetWidth;
+            const canvas = await html2canvas(element, {
+                scale: scale,
+                backgroundColor: '#e8cb8b'
+            });
+            const dataURL = canvas.toDataURL('image/png');
+            const fileName = `jennifer-rnd-seats.png`;
+            const downloadLink = document.createElement('a');
+            downloadLink.href = dataURL;
+            downloadLink.download = fileName;
+            downloadLink.click();
+        }
+    } catch (e) {
+        console.error('can not save image', e);
+    }
+};
 </script>
 
 <style lang="scss" scoped>

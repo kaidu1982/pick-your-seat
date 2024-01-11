@@ -16,7 +16,7 @@
                     :action="'hi'"
                 />
             </div>
-            <v-btn size="x-large" :width="350" @click="startFindSeat">자리찾기 중단하기</v-btn>
+            <v-btn size="x-large" :width="350" class="disable">자리찾는중...</v-btn>
         </template>
         <template v-else-if="playerStep === MemberStep.Found">
             <div class="container">
@@ -105,6 +105,10 @@ const startFindSeat = () => {
         .character {
             margin: auto;
         }
+    }
+    .disable {
+        opacity: 0.2;
+        cursor: not-allowed;
     }
     .v-btn {
         margin: 0 auto;

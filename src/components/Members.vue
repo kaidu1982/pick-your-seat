@@ -6,7 +6,7 @@
                 v-for="name in NAMES"
                 :key="name"
                 :name="name"
-                @click="selectProfile(name)"
+                @click="!seats.includes(name) && selectProfile(name)"
                 class="member"
                 :class="{ select: currentPlayerNameOrNull === name, disable: seats.includes(name) }"
             />
