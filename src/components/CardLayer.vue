@@ -47,7 +47,7 @@ const svgPath = computed(() => `./card/${props.card}.svg`);
     img {
         position: fixed;
         transform: translateY(120%);
-        transition: transform ease 0.6s;
+        transition: transform ease 0.3s;
         z-index: 1000;
         width: fit-content;
         height: fit-content;

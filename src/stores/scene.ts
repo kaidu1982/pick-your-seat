@@ -7,15 +7,15 @@ import mitt from 'mitt';
 
 export const SEATS_CARD = [
     EVENT_CARD.INDEPENDENT,
-    null,
-    null,
-    null,
+    EVENT_CARD.SEASON,
+    EVENT_CARD.SEASON,
+    EVENT_CARD.SEASON,
     EVENT_CARD.SEASON,
     EVENT_CARD.TREE,
     EVENT_CARD.INDEPENDENT,
     EVENT_CARD.WATER,
-    null,
-    null,
+    EVENT_CARD.SUN,
+    EVENT_CARD.SUN,
     EVENT_CARD.SUN,
     EVENT_CARD.INDEPENDENT
 ];
@@ -30,7 +30,7 @@ export const ANI_STEP = {
     STOP: 7
 };
 export const emitter = mitt();
-// const bgmAudio = new Audio('./sound/bgm.mp3');
+const bgmAudio = new Audio('./sound/playing-in-color.mp3');
 export const useSceneStore = defineStore('scene', () => {
     const sceneStep = ref<SceneStep>(0);
     const playerStep = ref<MemberStep>(0);
@@ -73,7 +73,7 @@ export const useSceneStore = defineStore('scene', () => {
         playerStep.value = MemberStep.Found;
 
         cardOrNull.value = SEATS_CARD[goingSeatIndex.value];
-        // bgmAudio.pause();
+        bgmAudio.pause();
     };
 
     const confirmAndNext = () => {
@@ -87,7 +87,7 @@ export const useSceneStore = defineStore('scene', () => {
     const updatePlayerStep = (step: MemberStep) => {
         playerStep.value = step;
         if (step === MemberStep.Finding) {
-            // bgmAudio.play();
+            bgmAudio.play();
         }
     };
     const selectPlayerNameOrNull = (name: MemberName | null) => {

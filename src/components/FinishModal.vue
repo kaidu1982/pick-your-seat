@@ -53,7 +53,7 @@ onUnmounted(() => {
     .window {
         position: fixed;
         transform: translateY(120%);
-        transition: transform ease 0.6s;
+        transition: transform ease 0.3s;
         display: flex;
         flex-direction: column;
 
