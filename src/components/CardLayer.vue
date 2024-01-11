@@ -13,6 +13,8 @@ const sceneStore = useSceneStore();
 
 const { closeCardLayer } = sceneStore;
 
+const sound = new Audio('./sound/card-slide-left.wav');
+
 const props = defineProps<{
     card: Card;
 }>();
@@ -21,6 +23,7 @@ const show = ref(false);
 onMounted(() => {
     setTimeout(() => {
         show.value = true;
+        sound.play();
     }, 100);
 });
 
