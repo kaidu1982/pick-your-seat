@@ -87,6 +87,7 @@ export const useSceneStore = defineStore('scene', () => {
     const updatePlayerStep = (step: MemberStep) => {
         playerStep.value = step;
         if (step === MemberStep.Finding) {
+            bgmAudio.currentTime = 0;
             bgmAudio.play();
         }
     };
