@@ -27,7 +27,8 @@ export const MEMBER_ACTION = {
     STANDING: 'standing',
     STRAIGHT: 'straight',
     BACK: 'back',
-    HI: 'hi'
+    HI1: 'hi_1',
+    HI2: 'hi_2'
 } as const;
 export const NAMES = Object.values(MEMBER_NAMES).sort();
 

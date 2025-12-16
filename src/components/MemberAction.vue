@@ -13,7 +13,7 @@
                     :width="130"
                     :height="240"
                     :name="currentPlayerNameOrNull"
-                    :action="'hi'"
+                    :action="MEMBER_ACTION.HI1"
                 />
             </div>
             <v-btn size="x-large" :width="350" class="disable">자리찾는중...</v-btn>
@@ -30,7 +30,7 @@
                     :width="130"
                     :height="240"
                     :name="currentPlayerNameOrNull"
-                    :action="'hi'"
+                    :action="MEMBER_ACTION.HI2"
                 />
             </div>
             <v-btn size="x-large" :width="350" @click="confirmAndNext">확인</v-btn>
@@ -40,7 +40,7 @@
 <script setup lang="ts">
 //썸네일 3열씩 표시, width X height는 고정으로 표시될거 같다.
 
-import { MemberStep } from '@/components/types';
+import { MEMBER_ACTION, MemberStep } from '@/components/types';
 import { VBtn } from 'vuetify/components/VBtn';
 import { useSceneStore } from '@/stores/scene';
 import { storeToRefs } from 'pinia';

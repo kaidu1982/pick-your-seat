@@ -29,9 +29,11 @@ const svgPath2 = computed(() => `./animate/${props.name}_${props.action}_2.svg`)
 <style lang="scss" scoped>
 .character {
     position: relative;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
     img {
-        width: 100%;
+        object-fit: contain;
         height: 100%;
         position: absolute;
     }
@@ -43,36 +45,5 @@ const svgPath2 = computed(() => `./animate/${props.name}_${props.action}_2.svg`)
         z-index: 11;
     }
 
-    //@keyframes alpha-animation1 {
-    //    0% {
-    //        opacity: 0;
-    //    }
-    //    50% {
-    //        opacity: 1;
-    //    }
-    //    100% {
-    //        opacity: 0;
-    //    }
-    //}
-    //
-    //@keyframes alpha-animation2 {
-    //    0% {
-    //        opacity: 1;
-    //    }
-    //    50% {
-    //        opacity: 0;
-    //    }
-    //    100% {
-    //        opacity: 1;
-    //    }
-    //}
-    //
-    //.svg-1 {
-    //    animation: alpha-animation1 1s linear infinite;
-    //}
-    //
-    //.svg-2 {
-    //    animation: alpha-animation2 1s linear infinite;
-    //}
 }
 </style>

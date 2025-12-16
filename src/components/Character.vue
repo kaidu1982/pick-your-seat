@@ -1,6 +1,6 @@
 <template>
     <div class="character" :style="{ width: props.width + 'px', height: props.height + 'px' }">
-        <img :src="svgPath" />
+        <img :src="svgPath"/>
     </div>
 </template>
 
@@ -26,9 +26,12 @@ const svgPath = computed(() => `./animate/${props.name}_${computedAction.value}.
 
 <style scoped>
 .character {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     img {
-        width: 100%;
         height: 100%;
+        object-fit: contain;
     }
 }
 </style>
