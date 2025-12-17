@@ -7,12 +7,12 @@
                 <div>모두 자리를 찾으셨네요.</div>
                 <div>다음에 또 만나요.</div>
             </div>
-            <v-btn size="x-large" style="margin-top: 12px" :width="380" @click="saveImage"
-                >이미지 내려받기</v-btn
-            >
-            <v-btn size="x-large" style="margin-top: 12px" :width="380" @click="reset"
-                >게임 다시하기</v-btn
-            >
+            <div class="round-button" @click="saveImage">
+                이미지 내려받기
+            </div>
+            <div class="round-button" @click="reset">
+                게임 다시하기
+            </div>
         </div>
     </div>
 </template>
@@ -68,10 +68,25 @@ onUnmounted(() => {
             margin: 42px 0 24px 0;
             text-align: center;
             font-size: 18px;
-            color: #1c1c1c;
+            color: #000000;
         }
         &.show {
             transform: translateY(0);
+        }
+
+        .round-button {
+            cursor: pointer;
+            margin-top: 12px;
+            width: 380px;
+            height: 64px;
+            border-radius: 48px;
+            border: 2px solid #000000;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            color: #000000;
+            font-size: 22px;
+            text-align: center;
         }
     }
 }

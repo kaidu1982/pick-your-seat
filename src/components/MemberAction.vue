@@ -38,14 +38,12 @@
 <script setup lang="ts">
 //썸네일 3열씩 표시, width X height는 고정으로 표시될거 같다.
 
-import { MEMBER_ACTION, MemberStep } from '@/components/types';
-import { VBtn } from 'vuetify/components/VBtn';
-import { useSceneStore } from '@/stores/scene';
-import { storeToRefs } from 'pinia';
-import Found from '@/components/icon/found.vue';
+import Character from '@/components/Character.vue';
 import Confirm from '@/components/icon/confirm.vue';
 import Radar from '@/components/icon/radar.vue';
-import Character from '@/components/Character.vue';
+import { MEMBER_ACTION, MemberStep } from '@/components/types';
+import { useSceneStore } from '@/stores/scene';
+import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 
 const sceneStore = useSceneStore();
@@ -53,16 +51,15 @@ const { updatePlayerStep, confirmAndNext } = sceneStore;
 const { currentPlayerNameOrNull, playerStep } = storeToRefs(sceneStore);
 
 const name = computed(() => {
-    if (currentPlayerNameOrNull.value) {
+    const playerName = currentPlayerNameOrNull.value;
+    if (playerName) {
         return (
-            currentPlayerNameOrNull.value[0].toUpperCase() + currentPlayerNameOrNull.value.slice(1)
+            playerName.charAt(0).toUpperCase() + playerName.slice(1)
         );
     }
     return '';
 });
-const startFindSeat = () => {
-    updatePlayerStep(MemberStep.Finding);
-};
+
 </script>
 
 <style scoped>
@@ -90,7 +87,7 @@ const startFindSeat = () => {
     }
 
     .container {
-        margin: 10px auto;
+        margin: 10px auto auto auto;
         height: 490px;
         display: flex;
         flex-direction: column;
@@ -102,13 +99,10 @@ const startFindSeat = () => {
             color: #ffffff;
         }
         .character {
-            margin: auto;
+            margin-top: 80px;
         }
     }
-    .disable {
-        opacity: 0.2;
-        cursor: not-allowed;
-    }
+    
     
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="member-wrapper">
-        <members v-if="playerStep === MemberStep.Ready" />
+        <member-list v-if="playerStep === MemberStep.Ready" />
         <member-action v-else />
     </div>
 </template>
@@ -8,7 +8,7 @@
 import { MemberStep } from '@/components/types';
 import { useSceneStore } from '@/stores/scene';
 import { storeToRefs } from 'pinia';
-import Members from '@/components/Members.vue';
+import MemberList from '@/components/MemberList.vue';
 import MemberAction from '@/components/MemberAction.vue';
 
 const sceneStore = useSceneStore();

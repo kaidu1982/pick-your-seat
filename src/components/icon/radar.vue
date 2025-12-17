@@ -51,7 +51,7 @@ addCount();
         z-index: 1;
         font-size: 22px;
         font-weight: 700;
-        color: #000000;
+        color: #ffffff;
         display: flex;
         align-items: center;
         justify-content: center;
