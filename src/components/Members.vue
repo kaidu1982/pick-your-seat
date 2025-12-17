@@ -12,6 +12,7 @@
             />
         </div>
         <v-btn
+            class="start-button"
             size="x-large"
             :disabled="currentPlayerNameOrNull === null"
             :width="350"
@@ -47,13 +48,14 @@ const startFindSeat = () => {
     display: flex;
     flex-direction: column;
     background: #455767;
-    padding: 16px;
+    
     box-sizing: border-box;
-    width: 382px;
     height: 672px;
 
     border-radius: 20px;
     .header {
+        padding-inline: 16px;
+        padding-top: 16px;
         margin-top: 14px;
         margin-bottom: 6px;
         color: #ffffff;
@@ -62,11 +64,13 @@ const startFindSeat = () => {
         align-self: center;
     }
     .container {
+        padding-inline: 16px;
         margin: 24px auto;
         display: grid;
         grid-gap: 16px;
         justify-content: center;
         grid-template-columns: repeat(3, 1fr);
+        overflow-y: auto;
 
         .member {
             border-radius: 16px;
@@ -90,6 +94,10 @@ const startFindSeat = () => {
                 cursor: not-allowed;
             }
         }
+    }
+    .start-button { 
+        margin-bottom: 16px;    
+        margin-inline: 16px;
     }
 }
 </style>

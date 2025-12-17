@@ -1,16 +1,17 @@
 <template>
     <div class="seats-n-loads" ref="seatsLoadsRef">
         <div class="left seats">
-            <seat :name="seats[0]" :direction="'bottom'" />
-            <seat :name="seats[1]" :direction="'bottom'" />
-            <seat :name="seats[2]" :direction="'top'" />
-            <seat :name="seats[3]" :direction="'bottom'" />
-            <seat :name="seats[4]" :direction="'top'" />
-            <seat :name="seats[5]" :direction="'bottom'" />
+            <seat :name="seats[0] ?? null" :direction="'bottom'" />
+            <seat :name="seats[1] ?? null" :direction="'bottom'" />
+            <seat :name="seats[2] ?? null" :direction="'top'" />
+            <seat :name="seats[3] ?? null" :direction="'bottom'" />
+            <seat :name="seats[4] ?? null" :direction="'top'" />
+            <seat :name="seats[5] ?? null" :direction="'bottom'" />
         </div>
         <div class="roads">
             <exit />
             <canvas ref="canvasRef" />
+            <seat :name="seats[12] ?? null" :direction="'bottom'" style="position: absolute; bottom: 140px; left:  220px; transform: translateX(-50%);"/>
 
             <animate-move
                 class="character-animation"
@@ -23,12 +24,12 @@
             />
         </div>
         <div class="right seats">
-            <seat :name="seats[6]" :direction="'top'" />
-            <seat :name="seats[7]" :direction="'bottom'" />
-            <seat :name="seats[8]" :direction="'top'" />
-            <seat :name="seats[9]" :direction="'bottom'" />
-            <seat :name="seats[10]" :direction="'top'" />
-            <seat :name="seats[11]" :direction="'bottom'" />
+            <seat :name="seats[6] ?? null" :direction="'top'" />
+            <seat :name="seats[7] ?? null" :direction="'bottom'" />
+            <seat :name="seats[8] ?? null" :direction="'top'" />
+            <seat :name="seats[9] ?? null" :direction="'bottom'" />
+            <seat :name="seats[10] ?? null" :direction="'top'" />
+            <seat :name="seats[11] ?? null" :direction="'bottom'" />
         </div>
     </div>
 </template>
@@ -73,7 +74,7 @@ const computedAction = computed(() => {
     else if (aniStep.value === ANI_STEP.ROTATION_LEFT || aniStep.value === ANI_STEP.MOVE_LEFT)
         return MEMBER_ACTION.LEFT;
     else if (aniStep.value === ANI_STEP.ROTATION_DOWN) return MEMBER_ACTION.STRAIGHT;
-    else if (aniStep.value === ANI_STEP.ROTATION_UP) return MEMBER_ACTION.BACK;
+    else if (aniStep.value === ANI_STEP.ROTATION_UP || aniStep.value === ANI_STEP.MOVE_UP_TO_SPECIAL_SEAT) return MEMBER_ACTION.BACK;
     else return MEMBER_ACTION.STANDING;
 });
 
@@ -83,12 +84,13 @@ const seatsYPosition = [
     startYOnPillRoad + radiusOnPillRoad + heightPerSeat * 2 + 10,
     startYOnPillRoad + radiusOnPillRoad + heightPerSeat * 3 + 10,
     startYOnPillRoad + radiusOnPillRoad + heightPerSeat * 4 + 10,
-    startYOnPillRoad + radiusOnPillRoad + heightPerSeat * 5 + 10
+    startYOnPillRoad + radiusOnPillRoad + heightPerSeat * 5 + 10,
 ];
+const width = 440;
+const height = 648;
+
 const canvasDraw = () => {
     const ctx = (canvasRef.value as HTMLCanvasElement).getContext('2d') as CanvasRenderingContext2D;
-    const width = 440;
-    const height = 648;
 
     const path = new Path2D();
 
@@ -108,6 +110,8 @@ const canvasDraw = () => {
         path.moveTo(width - 100, y);
         path.lineTo(width, y);
     });
+    path.moveTo( width * 0.5, startYOnPillRoad + heightOnPillRoad);
+    path.lineTo( width * 0.5, startYOnPillRoad + heightOnPillRoad - 120);
 
     ctx.lineWidth = roadWidth;
     ctx.strokeStyle = '#E5C47A';
@@ -159,13 +163,22 @@ const move = (tpf: number) => {
         }
 
         if (6 <= goingSeatIndex.value && goingSeatIndex.value < 12) {
-            if (seatsYPosition[goingSeatIndex.value - 6] <= currentPlayerPosition.value.y) {
-                currentPlayerPosition.value.y = seatsYPosition[goingSeatIndex.value - 6];
+            const seatY = seatsYPosition[goingSeatIndex.value - 6];
+            if (seatY !== undefined && seatY <= currentPlayerPosition.value.y) {
+                currentPlayerPosition.value.y = seatY;
                 aniStep.value = ANI_STEP.MOVE_RIGHT;
             }
         }
     } else if (aniStep.value === ANI_STEP.ROTATION_LEFT) {
         currentPlayerPosition.value.x -= moveDistance;
+
+        if(goingSeatIndex.value === 12) {
+            if(currentPlayerPosition.value.x <= width * 0.5) {
+                currentPlayerPosition.value.x = width * 0.5;
+                aniStep.value = ANI_STEP.MOVE_UP_TO_SPECIAL_SEAT;
+            }
+        }
+
         if (startXOnPillRoad >= currentPlayerPosition.value.x) {
             aniStep.value = ANI_STEP.ROTATION_UP;
             currentPlayerPosition.value.x = startXOnPillRoad;
@@ -178,8 +191,9 @@ const move = (tpf: number) => {
         }
 
         if (0 <= goingSeatIndex.value && goingSeatIndex.value < 6) {
-            if (seatsYPosition[goingSeatIndex.value] >= currentPlayerPosition.value.y) {
-                currentPlayerPosition.value.y = seatsYPosition[goingSeatIndex.value];
+            const seatY = seatsYPosition[goingSeatIndex.value];
+            if (seatY !== undefined && seatY >= currentPlayerPosition.value.y) {
+                currentPlayerPosition.value.y = seatY;
                 aniStep.value = ANI_STEP.MOVE_LEFT;
             }
         }
@@ -194,6 +208,13 @@ const move = (tpf: number) => {
         currentPlayerPosition.value.x += moveDistance;
         if (currentPlayerPosition.value.x >= widthOnPillRoad + startXOnPillRoad * 2) {
             currentPlayerPosition.value.x = widthOnPillRoad + startXOnPillRoad * 2;
+            aniStep.value = ANI_STEP.STOP;
+            seatDown();
+        }
+    } else if (aniStep.value === ANI_STEP.MOVE_UP_TO_SPECIAL_SEAT) {
+        currentPlayerPosition.value.y -= moveDistance;
+        if (currentPlayerPosition.value.y <= startYOnPillRoad + heightOnPillRoad - 120) {
+            currentPlayerPosition.value.y = startYOnPillRoad + heightOnPillRoad - 120;
             aniStep.value = ANI_STEP.STOP;
             seatDown();
         }

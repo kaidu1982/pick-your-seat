@@ -10,7 +10,8 @@ export const MEMBER_NAMES = {
     SAM: 'sam',
     AARON: 'aaron',
     AIDEN: 'aiden',
-    POTATO: 'potato'
+    POTATO: 'potato',
+    TAYLOR: 'taylor'
 } as const;
 
 export const EVENT_CARD = {
@@ -18,7 +19,8 @@ export const EVENT_CARD = {
     SEASON: 'season',
     INDEPENDENT: 'independent',
     TREE: 'slaveOfTree',
-    SUN: 'sun'
+    SUN: 'sun',
+    CENTER: 'rndCenter'
 } as const;
 
 export const MEMBER_ACTION = {

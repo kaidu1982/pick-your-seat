@@ -17,7 +17,8 @@ export const SEATS_CARD = [
     EVENT_CARD.SUN,
     EVENT_CARD.SUN,
     EVENT_CARD.SUN,
-    EVENT_CARD.INDEPENDENT
+    EVENT_CARD.INDEPENDENT,
+    EVENT_CARD.CENTER
 ];
 export const ANI_STEP = {
     APPEAR: 0,
@@ -27,7 +28,8 @@ export const ANI_STEP = {
     ROTATION_UP: 4,
     MOVE_LEFT: 5,
     MOVE_RIGHT: 6,
-    STOP: 7
+    MOVE_UP_TO_SPECIAL_SEAT: 7,
+    STOP: 8
 };
 export const emitter = mitt();
 const bgmAudio = new Audio('./sound/playing-in-color.mp3');
@@ -40,7 +42,7 @@ export const useSceneStore = defineStore('scene', () => {
 
     const currentPlayerNameOrNull = ref<MemberName | null>(null);
     const currentPlayerPosition = ref<Vector2D>(new Vector2D(220, 0));
-    const seats = ref<(MemberName | null)[]>(Array(12).fill(null));
+    const seats = ref<(MemberName | null)[]>(Array(13).fill(null));
 
     const reset = () => {
         sceneStep.value = 0;
@@ -64,7 +66,11 @@ export const useSceneStore = defineStore('scene', () => {
             .filter((seat) => seat !== null) as number[];
 
         if (emptySeats.length > 0) {
-            goingSeatIndex.value = emptySeats[Math.floor(Math.random() * emptySeats.length)];
+            const randomIndex = emptySeats[Math.floor(Math.random() * emptySeats.length)];
+            
+            if (randomIndex !== undefined) {
+                goingSeatIndex.value = randomIndex;
+            }
         }
     };
 
@@ -72,7 +78,8 @@ export const useSceneStore = defineStore('scene', () => {
         seats.value[goingSeatIndex.value] = currentPlayerNameOrNull.value;
         playerStep.value = MemberStep.Found;
 
-        cardOrNull.value = SEATS_CARD[goingSeatIndex.value];
+        cardOrNull.value = SEATS_CARD[goingSeatIndex.value] ?? null;
+        console.log('cardOrNull.value',cardOrNull.value);
         bgmAudio.pause();
     };
 
