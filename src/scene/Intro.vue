@@ -7,7 +7,9 @@
                 <div>이번엔 어떤 자리에 앉게 될까요?</div>
             </div>
 
-            <v-btn size="large" :width="330" @click="start">시작하기</v-btn>
+            <div class="round-button" @click="start">
+                시작하기
+            </div>
         </div>
         <img src="/etc/flower.svg" style="position: absolute; bottom: 10%; left: 150px;" />
         <img src="/etc/lego.svg" style="position: absolute; top: 8%; left: 350px;" />
@@ -48,6 +50,21 @@ const start = () => {
                 width: fit-content;
             }
             margin-bottom: 56px;
+        }
+
+        .round-button {
+            cursor: pointer;
+            margin-top: 12px;
+            width: 380px;
+            height: 64px;
+            border-radius: 48px;
+            border: 2px solid #ffffff;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 22px;
+            text-align: center;
         }
     }
 }
