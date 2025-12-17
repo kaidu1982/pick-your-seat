@@ -50,6 +50,7 @@ const startFindSeat = () => {
     background: #455767;
     
     box-sizing: border-box;
+    width: 400px;
     height: 672px;
 
     border-radius: 20px;

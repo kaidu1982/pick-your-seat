@@ -16,7 +16,6 @@
                     :action="MEMBER_ACTION.HI1"
                 />
             </div>
-            <v-btn size="x-large" :width="350" class="disable">자리찾는중...</v-btn>
         </template>
         <template v-else-if="playerStep === MemberStep.Found">
             <div class="container">
@@ -24,7 +23,7 @@
                     <div>자리를 찾기가 완료 되었습니다.</div>
                     <div>위치를 확인하세요.</div>
                 </div>
-                <found />
+                <confirm @click="confirmAndNext" :style="{ cursor: 'pointer' }" />
                 <character
                     v-if="currentPlayerNameOrNull"
                     :width="130"
@@ -33,7 +32,6 @@
                     :action="MEMBER_ACTION.HI2"
                 />
             </div>
-            <v-btn size="x-large" :width="350" @click="confirmAndNext">확인</v-btn>
         </template>
     </div>
 </template>
@@ -45,6 +43,7 @@ import { VBtn } from 'vuetify/components/VBtn';
 import { useSceneStore } from '@/stores/scene';
 import { storeToRefs } from 'pinia';
 import Found from '@/components/icon/found.vue';
+import Confirm from '@/components/icon/confirm.vue';
 import Radar from '@/components/icon/radar.vue';
 import Character from '@/components/Character.vue';
 import { computed } from 'vue';
@@ -70,18 +69,18 @@ const startFindSeat = () => {
 .member-action {
     display: flex;
     flex-direction: column;
-
     box-sizing: border-box;
-    width: 382px;
+    width: 400px;
     height: 672px;
-    background: #e5eaf4;
+    background: #000000;
 
     border-radius: 20px;
     .header {
         border-radius: 20px 20px 0 0;
-        background: #455767;
+        background: #000000;
         width: 100%;
-        height: 64px;
+        margin-top: 64px;
+        height: 36px;
         display: inline-flex;
         color: #ffffff;
         font-size: 24px;
@@ -91,16 +90,16 @@ const startFindSeat = () => {
     }
 
     .container {
-        margin: 24px auto;
+        margin: 10px auto;
         height: 490px;
         display: flex;
         flex-direction: column;
         align-items: center;
         .messages {
-            margin: 42px 0 24px 0;
+            margin-bottom: 24px;
             text-align: center;
             font-size: 18px;
-            color: #1c1c1c;
+            color: #ffffff;
         }
         .character {
             margin: auto;
@@ -110,8 +109,6 @@ const startFindSeat = () => {
         opacity: 0.2;
         cursor: not-allowed;
     }
-    .v-btn {
-        margin: 0 auto;
-    }
+    
 }
 </style>

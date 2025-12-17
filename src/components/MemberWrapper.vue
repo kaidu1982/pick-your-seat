@@ -20,7 +20,7 @@ const { playerStep } = storeToRefs(sceneStore);
 .member-wrapper {
     display: flex;
     flex-direction: column;
-    background: #455767;
+    background: #000000;
 
     border-radius: 20px;
 }

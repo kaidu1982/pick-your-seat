@@ -79,7 +79,6 @@ export const useSceneStore = defineStore('scene', () => {
         playerStep.value = MemberStep.Found;
 
         cardOrNull.value = SEATS_CARD[goingSeatIndex.value] ?? null;
-        console.log('cardOrNull.value',cardOrNull.value);
         bgmAudio.pause();
     };
 

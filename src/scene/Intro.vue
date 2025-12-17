@@ -3,13 +3,16 @@
         <div class="contents">
             <div class="message">
                 <div>3층 R&D에 오신것을 환영합니다.</div>
-                <div>자리 뽑기가 시작 되었습니다.</div>
-                <div>누구와, 어떤 자리에 앉게 될까요?</div>
+                <div>자리 뽑기를 할 시간이 되었군요.</div>
+                <div>이번엔 어떤 자리에 앉게 될까요?</div>
             </div>
 
             <v-btn size="large" :width="330" @click="start">시작하기</v-btn>
         </div>
-        <div class="btn"></div>
+        <img src="/etc/flower.svg" style="position: absolute; bottom: 10%; left: 150px;" />
+        <img src="/etc/lego.svg" style="position: absolute; top: 8%; left: 350px;" />
+        <img src="/etc/lamp.svg" style="position: absolute; top: 40%; right: 50px;" />
+        <img src="/etc/keyboard.svg" style="position: absolute; bottom: 10%; left: 55%;" />
     </div>
 </template>
 <script setup lang="ts">
@@ -24,9 +27,10 @@ const start = () => {
 </script>
 <style lang="scss" scoped>
 .intro {
-    background: #455767;
+    background: #000000;
     width: 100%;
     height: 100%;
+    position: relative;
     > .contents {
         position: fixed;
         top: 50%;
