@@ -8,13 +8,23 @@
                     <div>어디에 앉게 될까요?</div>
                 </div>
                 <radar />
-                <character
-                    v-if="currentPlayerNameOrNull"
-                    :width="130"
-                    :height="240"
-                    :name="currentPlayerNameOrNull"
-                    :action="MEMBER_ACTION.HI1"
-                />
+                <template v-if="currentPlayerNameOrNull">
+                    <character
+                        :width="130"
+                        :height="240"
+                        :name="currentPlayerNameOrNull"
+                        :action="MEMBER_ACTION.HI1"
+                        v-show="hi1Toggle"
+                    />
+                    <character
+                        :width="130"
+                        :height="240"
+                        :name="currentPlayerNameOrNull"
+                        :action="MEMBER_ACTION.HI2"
+                        v-show="!hi1Toggle"
+                    />
+                </template>
+                
             </div>
         </template>
         <template v-else-if="playerStep === MemberStep.Found">
@@ -44,11 +54,19 @@ import Radar from '@/components/icon/radar.vue';
 import { MEMBER_ACTION, MemberStep } from '@/components/types';
 import { useSceneStore } from '@/stores/scene';
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const sceneStore = useSceneStore();
 const { updatePlayerStep, confirmAndNext } = sceneStore;
 const { currentPlayerNameOrNull, playerStep } = storeToRefs(sceneStore);
+
+const hi1Toggle = ref(true);
+
+setInterval(() => {
+    hi1Toggle.value = !hi1Toggle.value;
+
+    console.log('hi1Toggle', hi1Toggle.value);
+}, 300);
 
 const name = computed(() => {
     const playerName = currentPlayerNameOrNull.value;
